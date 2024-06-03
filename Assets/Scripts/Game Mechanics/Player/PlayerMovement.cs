@@ -10,6 +10,8 @@ namespace Player
 
   [SerializeField] private Rigidbody2D _rb;
   [SerializeField] private float _movementSpeed = 0;
+  [SerializeField] private float _maxSpeed = 0;
+  [SerializeField] private float _decelerationFactor = 0;
   
   #endregion
 
@@ -33,12 +35,25 @@ namespace Player
 
   void MovePlayer()
   {
-   Vector2 speed=Vector2.zero;
+   Vector2 speedInputs=Vector2.zero;
 
-   speed.x = Input.GetAxis("Horizontal");
-   speed.y = Input.GetAxis("Vertical");
+   speedInputs.x = Input.GetAxis("Horizontal");
+   speedInputs.y = Input.GetAxis("Vertical");
+
+   if (speedInputs.magnitude != 0)
+   {
+    _rb.AddForce(speedInputs * _movementSpeed);
+   }
+   else
+   {
+    _rb.velocity *= (1 - _decelerationFactor * Time.fixedDeltaTime);
+   }
+
    
-   _rb.velocity=speed*_movementSpeed;
+   if (_rb.velocity.magnitude > _maxSpeed)
+   {
+    _rb.velocity = _rb.velocity.normalized * _maxSpeed;
+   }
   }
   #endregion
 
