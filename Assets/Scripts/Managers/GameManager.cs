@@ -1,12 +1,15 @@
-using UnityEngine;
+using System;
 
-namespace Example
+namespace Managers
 {
 
- public class GameManager : MonoBehaviour
+ public class GameManager : SingletonManager<GameManager>
  {
   #region Fields
-
+  
+  public static event Action<GameStates> OnGameStateChanged;
+  private GameStates _currentGameState;
+  
   #endregion
 
   #region Properties
@@ -14,14 +17,9 @@ namespace Example
   #endregion
 
   #region Unity Methods
-  void Start()
+  void Awake()
   {
-    
-  }
-
-  void Update()
-  {
-    
+   UpdateGameState(GameStates.Idle);
   }
   #endregion
 
@@ -30,7 +28,42 @@ namespace Example
   #endregion
 
   #region Public Methods
+  public void UpdateGameState(GameStates state)
+  {
+   if (state != _currentGameState)
+   {
+    switch (state)
+    {
+     case GameStates.Idle:
+      
+      break;
+                
+     case GameStates.Gameplay:
+      
+      break;
+                
+     case GameStates.Lose:
+      
+      break;
+                
+     case GameStates.Win:
+      
+      break;
+                
+     case GameStates.Endgame:
+                    
+      break;
+    }
+
+    _currentGameState = state;
+    OnGameStateChanged?.Invoke(_currentGameState);
+   }
+  }
 
   #endregion
+ }
+ public enum GameStates
+ {
+  Idle,Gameplay,Endgame,Win,Lose
  }
 }
