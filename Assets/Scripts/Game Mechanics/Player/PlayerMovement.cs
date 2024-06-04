@@ -13,7 +13,7 @@ namespace Player
   [SerializeField] private float _movementSpeed = 0;
   [SerializeField] private float _maxSpeed = 0;
   [SerializeField] private float _decelerationFactor = 0;
-  [SerializeField] private float _pushSpeed = 0;
+
   
   #endregion
 
@@ -22,16 +22,6 @@ namespace Player
   #endregion
 
   #region Unity Methods
-
-  private void OnEnable()
-  {
-   PlayerHitController.OnDamagedWithPush += PushPlayer;
-  }
-
-  private void OnDisable()
-  {
-   PlayerHitController.OnDamagedWithPush -= PushPlayer;
-  }
 
   void FixedUpdate()
   {
@@ -65,10 +55,7 @@ namespace Player
    }
   }
   
-  private void PushPlayer(Vector2 forceDirection)
-  {
-    _rb.AddForce(forceDirection * _pushSpeed, ForceMode2D.Impulse);
-  }
+
   #endregion
 
   #region Public Methods

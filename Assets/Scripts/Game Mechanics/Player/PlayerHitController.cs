@@ -2,6 +2,7 @@ using System;
 using Interfaces;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Player
 {
@@ -13,9 +14,9 @@ namespace Player
   [SerializeField] private int _health = 0;
   [SerializeField] private float _attackRange;
   [SerializeField] private int _attackPower;
-
-  public static event Action<Vector2> OnDamagedWithPush;
-
+  [SerializeField] private float _pushSpeed = 0;
+  [SerializeField] private Rigidbody2D _rb;
+  
   #endregion
 
   #region Properties
@@ -29,7 +30,7 @@ namespace Player
    {
     if (Input.GetKeyDown(KeyCode.Space))
     {
-     Attack();
+     AttackServerRpc();
     }
    }
   }
@@ -43,8 +44,9 @@ namespace Player
   #endregion
 
   #region Private Methods
-
-  private void Attack()
+  
+  [ServerRpc]
+  private void AttackServerRpc()
   {
    Collider2D[] _enemies = Physics2D.OverlapCircleAll(transform.position, _attackRange);
    
@@ -56,7 +58,7 @@ namespace Player
      {
       Vector2 _pushForce = _enemies[i].transform.position - transform.position;
       _pushForce.Normalize();
-      enemy.DealDamage(_attackPower,_pushForce);
+      enemy.DealDamageClientRpc(_attackPower,_pushForce);
      }
     }
    }
@@ -66,7 +68,14 @@ namespace Player
 
   #region Public Methods
   
-  public void DealDamage(int damageToDeal,Vector2 force)
+  [ClientRpc]
+  private void PushPlayerClientRpc(Vector2 forceDirection)
+  {
+   _rb.AddForce(forceDirection * _pushSpeed, ForceMode2D.Impulse);
+  }
+  
+  [ClientRpc]
+  public void DealDamageClientRpc(int damageToDeal,Vector2 force)
   {
    if (_health <= damageToDeal)
    {
@@ -74,8 +83,8 @@ namespace Player
    }
    else
    {
-    OnDamagedWithPush?.Invoke(force);
     _health -= damageToDeal;
+    PushPlayerClientRpc(force);
    }
   }
   
