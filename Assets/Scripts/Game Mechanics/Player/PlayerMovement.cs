@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -22,6 +23,12 @@ namespace Player
   #endregion
 
   #region Unity Methods
+
+  private void Start()
+  {
+   LocatePlayers();
+   ControlLines();
+  }
 
   void FixedUpdate()
   {
@@ -55,7 +62,35 @@ namespace Player
    }
   }
   
+  void LocatePlayers()
+  {
+   if (IsOwner)
+   {
+    if (IsHost)
+    {
+     transform.position = GameManager.Instance.HostPosition.position;
+    }
+    else
+    {
+     transform.position = GameManager.Instance.ClientPosition.position;
+    }
+   }
+  }
 
+  void ControlLines()
+  {
+   if (IsOwner)
+   {
+    if (IsHost)
+    {
+     GameManager.Instance.HostCollider.isTrigger=true;
+    }
+    else
+    {
+     GameManager.Instance.ClientCollider.isTrigger=true;
+    }
+   }
+  }
   #endregion
 
   #region Public Methods

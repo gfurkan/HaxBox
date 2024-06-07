@@ -1,4 +1,6 @@
 using System;
+using Unity.Netcode;
+using UnityEngine;
 
 namespace Managers
 {
@@ -6,7 +8,11 @@ namespace Managers
  public class GameManager : SingletonManager<GameManager>
  {
   #region Fields
-  
+
+  [SerializeField] private Transform _hostPosition;
+  [SerializeField] private Transform _clientPosition;
+  [SerializeField] private Collider2D _clientCollider;
+  [SerializeField] private Collider2D _hostCollider;
   public static event Action<GameStates> OnGameStateChanged;
   private GameStates _currentGameState;
   
@@ -14,6 +20,11 @@ namespace Managers
 
   #region Properties
 
+  public Transform HostPosition => _hostPosition;
+  public Transform ClientPosition => _clientPosition;
+  public Collider2D HostCollider => _hostCollider;
+  public Collider2D ClientCollider => _clientCollider;
+  
   #endregion
 
   #region Unity Methods
@@ -59,7 +70,29 @@ namespace Managers
     OnGameStateChanged?.Invoke(_currentGameState);
    }
   }
+  
+  public void StartGame()
+  {
+   UIManager.Instance.ControlMainScreen(false);
+   print(NetworkManager.Singleton.ConnectedClientsList.Count);
 
+   if (NetworkManager.Singleton.ConnectedClientsList.Count == 0)
+   {
+    NetworkManager.Singleton.StartHost();
+    print("host");
+   }
+   else
+   {
+    NetworkManager.Singleton.StartClient();
+    print("client");
+   }
+  }
+
+  public void ReturnToHome()
+  {
+   UIManager.Instance.ControlMainScreen(true);
+   NetworkManager.Singleton.DisconnectClient(NetworkManager.Singleton.LocalClientId);
+  }
   #endregion
  }
  public enum GameStates

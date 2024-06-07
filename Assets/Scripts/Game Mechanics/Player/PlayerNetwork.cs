@@ -32,12 +32,12 @@ namespace Player
   {
    if (IsOwner)
    {
-    //_netPosition.Value = transform.position;
+    _netPosition.Value = transform.position;
     _netVelocity.Value = _rb.velocity;
    }
    else
    {
-    //transform.position = _netPosition.Value;
+    transform.position = _netPosition.Value;
     _rb.velocity = _netVelocity.Value;
    }
   }
