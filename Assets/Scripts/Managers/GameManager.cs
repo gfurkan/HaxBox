@@ -1,4 +1,5 @@
 using System;
+using Managers.Network;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -30,14 +31,10 @@ namespace Managers
   #region Unity Methods
   void Awake()
   {
-   UpdateGameState(GameStates.Idle);
+    UpdateGameState(GameStates.Idle);
   }
   #endregion
-
-  #region Private Methods
-
-  #endregion
-
+  
   #region Public Methods
   public void UpdateGameState(GameStates state)
   {
@@ -71,32 +68,11 @@ namespace Managers
    }
   }
   
-  public void StartGame()
-  {
-   UIManager.Instance.ControlMainScreen(false);
-   print(NetworkManager.Singleton.ConnectedClientsList.Count);
-
-   if (NetworkManager.Singleton.ConnectedClientsList.Count == 0)
-   {
-    NetworkManager.Singleton.StartHost();
-    print("host");
-   }
-   else
-   {
-    NetworkManager.Singleton.StartClient();
-    print("client");
-   }
-  }
-
-  public void ReturnToHome()
-  {
-   UIManager.Instance.ControlMainScreen(true);
-   NetworkManager.Singleton.DisconnectClient(NetworkManager.Singleton.LocalClientId);
-  }
   #endregion
  }
  public enum GameStates
  {
   Idle,Gameplay,Endgame,Win,Lose
  }
+ 
 }

@@ -18,25 +18,7 @@ namespace Player
         [SerializeField] private Image _healthFillImage;
 
         private float _currentHealth = 0;
-        private NetworkVariable<int> attackPowerByDistance = new NetworkVariable<int>();
-        private int ist = 0;
 
-        private NetworkVariable<GameEndControls> testClient = new NetworkVariable<GameEndControls>(
-            new GameEndControls {
-            isGameFinished=false,
-            loserId=0,
-        },NetworkVariableReadPermission.Everyone,NetworkVariableWritePermission.Owner);
-        
-        public struct GameEndControls : INetworkSerializable
-        {
-            public bool isGameFinished;
-            public int loserId;
-            public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
-            {
-                serializer.SerializeValue(ref isGameFinished);
-                serializer.SerializeValue(ref loserId);
-            }
-        }
         #endregion
 
         #region Properties
@@ -49,16 +31,11 @@ namespace Player
         {
             _currentHealth = _startHealth;
         }
-
-        public override void OnNetworkSpawn()
-        {
-            testClient.OnValueChanged += (GameEndControls prev, GameEndControls next) => { print(testClient.Value.isGameFinished  + "  +  " + testClient.Value.loserId); };
-        }
+        
         void Update()
-        {
-
+        { 
             if (IsOwner)
-            {
+            { 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     AttackServerRpc();
@@ -122,11 +99,11 @@ namespace Player
         {
             if (loserId != NetworkManager.Singleton.LocalClientId)
             {
-                UIManager.Instance.ShowWinScreen();
+                UIManager.Instance.ShowResultScreen(false);
             }
             else
             {
-                UIManager.Instance.ShowLoseScreen();
+                UIManager.Instance.ShowResultScreen(true);
             }
 
         }

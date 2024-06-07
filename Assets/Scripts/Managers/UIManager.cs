@@ -30,6 +30,11 @@ namespace Managers
 
   public void ControlMainScreen(bool val)
   {
+   if (val)
+   {
+    _loseScreen.SetActive(false);
+    _winScreen.SetActive(false);
+   }
    _mainScreen.SetActive(val);
   }
   #endregion
@@ -37,17 +42,21 @@ namespace Managers
   #region Public Methods
 
 
-  public void ShowWinScreen()
+  public void ShowResultScreen(bool isLose)
   {
-   _winScreen.SetActive(true);
-   _loseScreen.SetActive(false);
-  }
+   if (isLose)
+   {
+    _loseScreen.SetActive(true);
+    _winScreen.SetActive(false);
+   }
+   else
+   {
+    _winScreen.SetActive(true);
+    _loseScreen.SetActive(false);
+   }
 
-  public void ShowLoseScreen()
-  {
-   _loseScreen.SetActive(true);
-   _winScreen.SetActive(false);
   }
+  
   #endregion
  }
 }
