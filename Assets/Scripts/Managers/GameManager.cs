@@ -1,5 +1,4 @@
 using System;
-using Managers.Network;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,6 +9,7 @@ namespace Managers
  {
   #region Fields
 
+  [SerializeField] private Transform _playersRoot;
   [SerializeField] private Transform _hostPosition;
   [SerializeField] private Transform _clientPosition;
   [SerializeField] private Collider2D _clientCollider;
@@ -67,9 +67,32 @@ namespace Managers
     OnGameStateChanged?.Invoke(_currentGameState);
    }
   }
-  
+
+
+  public void StartHost()
+  {
+   NetworkManager.Singleton.StartHost();
+   UIManager.Instance.ControlMainScreen(false);
+  }
+
+  public void StartClient()
+  {
+   NetworkManager.Singleton.StartClient();
+   UIManager.Instance.ControlMainScreen(false);
+  }
+  public void ReturnToHome()
+  {
+   UIManager.Instance.ControlMainScreen(true);
+   NetworkManager.Singleton.Shutdown();
+  }
+
+  public void SetPlayerRoot(Transform player)
+  {
+   player.SetParent(_playersRoot);
+  }
   #endregion
  }
+
  public enum GameStates
  {
   Idle,Gameplay,Endgame,Win,Lose

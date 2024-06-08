@@ -84,10 +84,12 @@ namespace Player
     if (IsHost)
     {
      GameManager.Instance.HostCollider.isTrigger=true;
+     GameManager.Instance.ClientCollider.isTrigger=false;
     }
     else
     {
      GameManager.Instance.ClientCollider.isTrigger=true;
+     GameManager.Instance.HostCollider.isTrigger=false;
     }
    }
   }
