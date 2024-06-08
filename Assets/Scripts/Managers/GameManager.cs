@@ -8,8 +8,7 @@ namespace Managers
  public class GameManager : SingletonManager<GameManager>
  {
   #region Fields
-
-  [SerializeField] private Transform _playersRoot;
+  
   [SerializeField] private Transform _hostPosition;
   [SerializeField] private Transform _clientPosition;
   [SerializeField] private Collider2D _clientCollider;
@@ -84,11 +83,6 @@ namespace Managers
   {
    UIManager.Instance.ControlMainScreen(true);
    NetworkManager.Singleton.Shutdown();
-  }
-
-  public void SetPlayerRoot(Transform player)
-  {
-   player.SetParent(_playersRoot);
   }
   #endregion
  }

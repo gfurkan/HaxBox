@@ -3456,7 +3456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f69eb020b28d24b858eff34aa49401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playersRoot: {fileID: 0}
   _hostPosition: {fileID: 786270578}
   _clientPosition: {fileID: 1054705959}
   _clientCollider: {fileID: 352276158}

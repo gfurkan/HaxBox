@@ -377,6 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: -4716965377161426548}
+  _renderer: {fileID: 4751798583308457933}
 --- !u!114 &3393438387631266509
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,6 +410,8 @@ MonoBehaviour:
   _attackRange: 0.6
   _attackPower: 5
   _pushSpeed: 500
+  _playerRenderer: {fileID: 4751798583308457933}
+  _deathParticle: {fileID: 7983559214503210499, guid: f2e1ee018a7d12e4e865e47b1b11f7c0, type: 3}
   _rb: {fileID: -4716965377161426548}
   _healthFillImage: {fileID: 7254394240549959203}
 --- !u!50 &-4716965377161426548
