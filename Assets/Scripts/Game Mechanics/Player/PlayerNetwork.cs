@@ -1,4 +1,3 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -21,11 +20,15 @@ namespace Player
 
   #region Properties
 
+  public Renderer PlayerRenderer => _playerRenderer;
+  public Renderer AttackRenderer => _attackRenderer;
+  public Rigidbody2D Rb => _rb;
+  
   #endregion
 
   #region Unity Methods
 
-  private void Start()
+  private void Awake()
   {
    if (IsOwner)
    {
@@ -58,17 +61,11 @@ namespace Player
    {
     transform.position = _netPosition.Value;
     _rb.velocity = _netVelocity.Value;
+    
     _playerRenderer.material.color = _netColor.Value;
     _attackRenderer.material.color = _netColor.Value;
    }
   }
   #endregion
-
-  #region Public Methods
-
-  #endregion
-  
-
  }
- 
 }

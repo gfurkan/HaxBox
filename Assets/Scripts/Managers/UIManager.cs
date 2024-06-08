@@ -1,4 +1,3 @@
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -49,10 +48,9 @@ namespace Managers
   #endregion
 
   #region Public Methods
-
-
   public void ShowResultScreen(bool isLose)
   {
+   _gameScreen.SetActive(false);
    if (isLose)
    {
     _loseScreen.SetActive(true);
@@ -63,9 +61,7 @@ namespace Managers
     _winScreen.SetActive(true);
     _loseScreen.SetActive(false);
    }
-
   }
-  
   #endregion
  }
 }

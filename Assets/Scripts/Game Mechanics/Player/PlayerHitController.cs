@@ -11,23 +11,19 @@ namespace Player
     public class PlayerHitController : NetworkBehaviour, IDamagable
     {
         #region Fields
+        
         [Header("Values")]
         [SerializeField] private float _startHealth = 0;
         [SerializeField] private float _attackRange;
-        [SerializeField] private int _attackPower;
         [SerializeField] private float _pushSpeed = 0;
+        [SerializeField] private int _attackPower;
+        
         [Header("Objects")]
-        [SerializeField] private Renderer _playerRenderer;
-        [SerializeField] private Renderer _attackRenderer;
+        [SerializeField] private PlayerNetwork _playerNetwork;
         [SerializeField] private ParticleSystem _deathParticle;
-        [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private Image _healthFillImage;
 
         private float _currentHealth = 0;
-
-        #endregion
-
-        #region Properties
 
         #endregion
 
@@ -66,7 +62,7 @@ namespace Player
 
         #region Private Methods
 
-        [ServerRpc]
+        [ServerRpc (RequireOwnership = false)]
         private void AttackServerRpc()
         {
             Collider2D[] _enemies = Physics2D.OverlapCircleAll(transform.position, _attackRange);
@@ -96,10 +92,9 @@ namespace Player
         private void ControlFinishScreenClientRpc(ulong loserId)
         {
             ControlFinishScreen(loserId);
-
         }
 
-        async void ControlFinishScreen(ulong loserId)
+        private async void ControlFinishScreen(ulong loserId)
         {
             await Task.Delay(1000);
             if (loserId != NetworkManager.Singleton.LocalClientId)
@@ -114,20 +109,20 @@ namespace Player
         [ClientRpc]
         private void PushPlayerClientRpc(Vector2 forceDirection)
         {
-            _rb.AddForce(forceDirection * _pushSpeed);
+            _playerNetwork.Rb.AddForce(forceDirection * _pushSpeed);
         }
         [ClientRpc]
         private void SpawnParticleEffectClientRpc()
         {
             var particleSystem = Instantiate(_deathParticle, transform.position, quaternion.identity);
             var main = particleSystem.main;
-            main.startColor = _playerRenderer.material.color;
+            main.startColor = _playerNetwork.PlayerRenderer.material.color;
             gameObject.SetActive(false);
         }
         private void SetColor(Color color)
         {
-            _playerRenderer.material.color = color;
-            _attackRenderer.material.color = color;
+            _playerNetwork.PlayerRenderer.material.color = color;
+            _playerNetwork.AttackRenderer.material.color = color;
         }
 
         private void Attack()
@@ -147,7 +142,6 @@ namespace Player
         {
             if (_currentHealth <= damageToDeal)
             {
-                // killl
                 SpawnParticleEffectClientRpc();
                 ControlHealthFillImageClientRpc(0);
                 ControlFinishScreenClientRpc(OwnerClientId);

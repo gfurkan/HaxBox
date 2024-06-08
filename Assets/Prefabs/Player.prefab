@@ -226,6 +226,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -393,6 +395,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -440,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3381302723
+  GlobalObjectIdHash: 4138845773
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -476,7 +480,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c40c434601f1fa43beffccedcaf73a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rb: {fileID: -4716965377161426548}
+  _playerNetwork: {fileID: 3874014548173250156}
   _movementSpeed: 10
   _maxSpeed: 3
   _decelerationFactor: 2
@@ -494,12 +498,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startHealth: 100
   _attackRange: 0.6
-  _attackPower: 5
   _pushSpeed: 500
-  _playerRenderer: {fileID: 4751798583308457933}
-  _attackRenderer: {fileID: 7757896719143027267}
+  _attackPower: 5
+  _playerNetwork: {fileID: 3874014548173250156}
   _deathParticle: {fileID: 7983559214503210499, guid: f2e1ee018a7d12e4e865e47b1b11f7c0, type: 3}
-  _rb: {fileID: -4716965377161426548}
   _healthFillImage: {fileID: 7254394240549959203}
 --- !u!50 &-4716965377161426548
 Rigidbody2D:
@@ -536,6 +538,7 @@ CircleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6180009653753242845}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -559,9 +562,9 @@ CircleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
   m_Radius: 0.5
 --- !u!1 &8571913151778314202
 GameObject:

@@ -8,8 +8,8 @@ namespace Player
  public class PlayerMovement : NetworkBehaviour
  {
   #region Fields
-
-  [SerializeField] private Rigidbody2D _rb;
+  
+  [SerializeField] private PlayerNetwork _playerNetwork;
   [SerializeField] private float _movementSpeed = 0;
   [SerializeField] private float _maxSpeed = 0;
   [SerializeField] private float _decelerationFactor = 0;
@@ -18,11 +18,7 @@ namespace Player
    new NetworkVariable<bool>(false);
 
   #endregion
-
-  #region Properties
-
-  #endregion
-
+  
   #region Unity Methods
 
   private void Start()
@@ -36,12 +32,13 @@ namespace Player
    if (IsOwner)
    {
     ControlMovementServerRpc();
+    
     if (_isMovementEnabled.Value)
     {
      MovePlayer();
     }
+    
    }
-
   }
   #endregion
 
@@ -69,17 +66,17 @@ namespace Player
 
    if (speedInputs.magnitude != 0)
    {
-    _rb.AddForce(speedInputs * _movementSpeed);
+    _playerNetwork.Rb.AddForce(speedInputs * _movementSpeed);
    }
    else
    {
-    _rb.velocity *= (1 - _decelerationFactor * Time.fixedDeltaTime);
+    _playerNetwork.Rb.velocity *= (1 - _decelerationFactor * Time.fixedDeltaTime);
    }
 
    
-   if (_rb.velocity.magnitude > _maxSpeed)
+   if (_playerNetwork.Rb.velocity.magnitude > _maxSpeed)
    {
-    _rb.velocity = _rb.velocity.normalized * _maxSpeed;
+    _playerNetwork.Rb.velocity = _playerNetwork.Rb.velocity.normalized * _maxSpeed;
    }
   }
   
@@ -114,10 +111,6 @@ namespace Player
     }
    }
   }
-  #endregion
-
-  #region Public Methods
-
   #endregion
  }
 }

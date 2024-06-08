@@ -1,4 +1,3 @@
-using Unity.Netcode;
 using UnityEngine;
 
 namespace Managers
@@ -19,7 +18,7 @@ namespace Managers
             {
                 if (_Instance == null)
                 {
-                    _Instance = FindObjectOfType(typeof(T)) as T;
+                    _Instance = FindFirstObjectByType(typeof(T)) as T;
                 }
 
                 return _Instance;

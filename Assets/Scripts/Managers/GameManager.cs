@@ -1,4 +1,3 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,9 +9,10 @@ namespace Managers
   #region Fields
   
   [SerializeField] private Transform _hostPosition;
+  [SerializeField] private Collider2D _hostCollider;
+  
   [SerializeField] private Transform _clientPosition;
   [SerializeField] private Collider2D _clientCollider;
-  [SerializeField] private Collider2D _hostCollider;
 
   #endregion
 
@@ -25,10 +25,6 @@ namespace Managers
   
   #endregion
 
-  #region Unity Methods
-  
-  #endregion
-  
   #region Public Methods
 
   public void StartHost()
