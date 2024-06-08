@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -11,11 +12,18 @@ namespace Managers
   [SerializeField] private GameObject _winScreen;
   [SerializeField] private GameObject _loseScreen;
   [SerializeField] private GameObject _mainScreen;
+  [SerializeField] private GameObject _gameScreen;
+  
+  [SerializeField] private Button _attackButton;
+  [SerializeField] private Joystick _movementJoystick;
 
   #endregion
 
   #region Properties
 
+  public Button AttackButton => _attackButton;
+  public Joystick MovementJoystick => _movementJoystick;
+  
   #endregion
 
   #region Unity Methods
@@ -36,6 +44,7 @@ namespace Managers
     _winScreen.SetActive(false);
    }
    _mainScreen.SetActive(val);
+   _gameScreen.SetActive(!val);
   }
   #endregion
 

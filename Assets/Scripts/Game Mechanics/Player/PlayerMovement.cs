@@ -1,4 +1,3 @@
-using System;
 using Managers;
 using Unity.Netcode;
 using UnityEngine;
@@ -65,8 +64,8 @@ namespace Player
   {
    Vector2 speedInputs=Vector2.zero;
 
-   speedInputs.x = Input.GetAxis("Horizontal");
-   speedInputs.y = Input.GetAxis("Vertical");
+   speedInputs.x = UIManager.Instance.MovementJoystick.Horizontal;
+   speedInputs.y = UIManager.Instance.MovementJoystick.Vertical;
 
    if (speedInputs.magnitude != 0)
    {

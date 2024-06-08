@@ -18,6 +18,7 @@ namespace Player
         [SerializeField] private float _pushSpeed = 0;
         [Header("Objects")]
         [SerializeField] private Renderer _playerRenderer;
+        [SerializeField] private Renderer _attackRenderer;
         [SerializeField] private ParticleSystem _deathParticle;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private Image _healthFillImage;
@@ -34,6 +35,7 @@ namespace Player
 
         private void Awake()
         {
+            UIManager.Instance.AttackButton.onClick.AddListener(Attack);
             _currentHealth = _startHealth;
         }
 
@@ -54,19 +56,6 @@ namespace Player
             }
 
         }
-
-        void Update()
-        { 
-            if (IsOwner)
-            { 
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    AttackServerRpc();
-                }
-           
-            }
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
@@ -138,8 +127,16 @@ namespace Player
         private void SetColor(Color color)
         {
             _playerRenderer.material.color = color;
+            _attackRenderer.material.color = color;
         }
-        
+
+        private void Attack()
+        {
+            if (IsOwner)
+            { 
+                AttackServerRpc();
+            }
+        }
         #endregion
 
         
