@@ -834,7 +834,7 @@ GameObject:
   - component: {fileID: 352276159}
   - component: {fileID: 352276158}
   m_Layer: 0
-  m_Name: ClientLine
+  m_Name: HostLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1693,7 +1693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 786270578}
   m_Layer: 0
-  m_Name: HostPosition
+  m_Name: ClientPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1773,7 +1773,7 @@ GameObject:
   - component: {fileID: 970776232}
   - component: {fileID: 970776231}
   m_Layer: 0
-  m_Name: HostLine
+  m_Name: ClientLine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1901,7 +1901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1054705959}
   m_Layer: 0
-  m_Name: ClientPosition
+  m_Name: HostPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3456,10 +3456,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f69eb020b28d24b858eff34aa49401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostPosition: {fileID: 786270578}
-  _clientPosition: {fileID: 1054705959}
-  _clientCollider: {fileID: 352276158}
-  _hostCollider: {fileID: 970776231}
+  _hostPosition: {fileID: 1054705959}
+  _clientPosition: {fileID: 786270578}
+  _clientCollider: {fileID: 970776231}
+  _hostCollider: {fileID: 352276158}
 --- !u!1 &4762350815916262796
 GameObject:
   m_ObjectHideFlags: 0

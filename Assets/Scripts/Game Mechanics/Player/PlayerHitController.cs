@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Interfaces;
 using Managers;
 using Unity.Mathematics;
@@ -105,6 +106,13 @@ namespace Player
         [ClientRpc]
         private void ControlFinishScreenClientRpc(ulong loserId)
         {
+            ControlFinishScreen(loserId);
+
+        }
+
+        async void ControlFinishScreen(ulong loserId)
+        {
+            await Task.Delay(1000);
             if (loserId != NetworkManager.Singleton.LocalClientId)
             {
                 UIManager.Instance.ShowResultScreen(false);
@@ -113,9 +121,7 @@ namespace Player
             {
                 UIManager.Instance.ShowResultScreen(true);
             }
-
         }
-        
         [ClientRpc]
         private void PushPlayerClientRpc(Vector2 forceDirection)
         {
@@ -124,7 +130,9 @@ namespace Player
         [ClientRpc]
         private void SpawnParticleEffectClientRpc()
         {
-            Instantiate(_deathParticle, transform.position, quaternion.identity);
+            var particleSystem = Instantiate(_deathParticle, transform.position, quaternion.identity);
+            var main = particleSystem.main;
+            main.startColor = _playerRenderer.material.color;
             gameObject.SetActive(false);
         }
         private void SetColor(Color color)
@@ -142,7 +150,7 @@ namespace Player
         {
             if (_currentHealth <= damageToDeal)
             {
-                // kill
+                // killl
                 SpawnParticleEffectClientRpc();
                 ControlHealthFillImageClientRpc(0);
                 ControlFinishScreenClientRpc(OwnerClientId);

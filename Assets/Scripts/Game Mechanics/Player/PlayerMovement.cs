@@ -15,7 +15,9 @@ namespace Player
   [SerializeField] private float _maxSpeed = 0;
   [SerializeField] private float _decelerationFactor = 0;
 
-  
+  private NetworkVariable<bool> _isMovementEnabled =
+   new NetworkVariable<bool>(false);
+
   #endregion
 
   #region Properties
@@ -32,13 +34,33 @@ namespace Player
 
   void FixedUpdate()
   {
-   if(IsOwner)
-    MovePlayer();
+   if (IsOwner)
+   {
+    ControlMovementServerRpc();
+    if (_isMovementEnabled.Value)
+    {
+     MovePlayer();
+    }
+   }
+
   }
   #endregion
 
   #region Private Methods
 
+  [ServerRpc]
+  void ControlMovementServerRpc()
+  {
+   if (IsHost)
+    if (NetworkManager.Singleton.ConnectedClientsList.Count > 1)
+    {
+     _isMovementEnabled.Value = true;
+    }
+    else
+    {
+     _isMovementEnabled.Value = false;
+    }
+  }
   void MovePlayer()
   {
    Vector2 speedInputs=Vector2.zero;
